@@ -62,7 +62,7 @@ $manifestVersion = $Manifest->{'version'} ?? '';
         </select>
     </div>
     
-    <button class="btn btn-primary" onclick="atualizarGraficos()">🔄 Atualizar</button>
+    <!--<button class="btn btn-primary" onclick="atualizarGraficos()">🔄 Atualizar</button>-->
 </div>
 
 <?php
