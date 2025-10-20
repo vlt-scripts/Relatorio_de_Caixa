@@ -680,11 +680,13 @@ $manifestVersion = $Manifest->{'version'} ?? '';
 
         .tabs {
             padding: 0 10px;
+            overflow-x: auto;
         }
 
         .tab-button {
             padding: 12px 20px;
             font-size: 12px;
+            white-space: nowrap;
         }
     }
 </style>
@@ -702,7 +704,7 @@ $manifestVersion = $Manifest->{'version'} ?? '';
     window.onload = function() {
         toggleTarifaRows();
         
-        // Verificar se deve abrir a aba de gráficos, ticket ou evolução
+        // Verificar se deve abrir uma aba específica
         const urlParams = new URLSearchParams(window.location.search);
         const activeTab = urlParams.get('tab');
         
@@ -712,6 +714,8 @@ $manifestVersion = $Manifest->{'version'} ?? '';
             switchTab('ticket');
         } else if (activeTab === 'evolucao') {
             switchTab('evolucao');
+        } else if (activeTab === 'anomalias') {
+            switchTab('anomalias');
         }
     };
 
@@ -741,7 +745,7 @@ $manifestVersion = $Manifest->{'version'} ?? '';
         
         // Atualizar URL com a aba ativa (sem recarregar a página)
         const currentUrl = new URL(window.location.href);
-        if (tabName === 'graficos' || tabName === 'ticket' || tabName === 'evolucao') {
+        if (tabName === 'graficos' || tabName === 'ticket' || tabName === 'evolucao' || tabName === 'anomalias') {
             currentUrl.searchParams.set('tab', tabName);
         } else {
             // Remove o parâmetro tab quando voltar para financeiro
@@ -787,6 +791,9 @@ $manifestVersion = $Manifest->{'version'} ?? '';
                 </button>
                 <button class="tab-button" id="tab-evolucao" onclick="switchTab('evolucao')">
                     📈 EVOLUÇÃO
+                </button>
+                <button class="tab-button" id="tab-anomalias" onclick="switchTab('anomalias')">
+                    🔍 ANOMALIAS
                 </button>
             </div>
         </div>
@@ -1054,6 +1061,19 @@ $manifestVersion = $Manifest->{'version'} ?? '';
                         include('evolucao_content.php'); 
                     } else {
                         echo '<p class="no-data">Arquivo evolucao_content.php não encontrado.</p>';
+                    }
+                    ?>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: ANOMALIAS -->
+            <div id="content-anomalias" class="tab-content">
+                <div class="content-wrapper">
+                    <?php 
+                    if (file_exists('anomalias_content.php')) {
+                        include('anomalias_content.php'); 
+                    } else {
+                        echo '<p class="no-data">Arquivo anomalias_content.php não encontrado.</p>';
                     }
                     ?>
                 </div>
